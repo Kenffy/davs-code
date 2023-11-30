@@ -1,0 +1,37 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+// datasource db {
+//   provider = "postgresql"
+//   url      = env("DATABASE_URL")
+// }
+
+datasource db {
+  provider = "sqlite"
+  url      = env("DATABASE_URL")
+}
+
+
+model Detail {
+  Id String @id @default(uuid())
+  ProductId String
+  ProductInfos String?
+  Carts Cart[]
+  CreatedAt DateTime @default(now())
+  UpdatedAt DateTime @updatedAt
+}
+
+model Cart {
+  Id String @id @default(uuid())
+  UserId String
+  Detail Detail @relation(fields: [CartId], references: [Id], onDelete: Cascade)
+  CartId String
+  DetailsId String
+  CreatedAt DateTime @default(now())
+  UpdatedAt DateTime @updatedAt
+}
+

@@ -1,0 +1,19 @@
+-- CreateTable
+CREATE TABLE "Detail" (
+    "Id" TEXT NOT NULL PRIMARY KEY,
+    "ProductId" TEXT NOT NULL,
+    "ProductInfos" TEXT,
+    "CreatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "UpdatedAt" DATETIME NOT NULL
+);
+
+-- CreateTable
+CREATE TABLE "Cart" (
+    "Id" TEXT NOT NULL PRIMARY KEY,
+    "UserId" TEXT NOT NULL,
+    "CartId" TEXT NOT NULL,
+    "DetailsId" TEXT NOT NULL,
+    "CreatedAt" DATETIME NOT NULL DEFAULT CURRENT_TIMESTAMP,
+    "UpdatedAt" DATETIME NOT NULL,
+    CONSTRAINT "Cart_CartId_fkey" FOREIGN KEY ("CartId") REFERENCES "Detail" ("Id") ON DELETE RESTRICT ON UPDATE CASCADE
+);
