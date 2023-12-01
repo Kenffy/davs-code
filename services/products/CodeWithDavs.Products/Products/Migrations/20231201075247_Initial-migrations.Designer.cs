@@ -11,7 +11,7 @@ using Products.Data;
 namespace Products.Migrations
 {
     [DbContext(typeof(StoreDbContext))]
-    [Migration("20231130213203_Initial-migrations")]
+    [Migration("20231201075247_Initial-migrations")]
     partial class Initialmigrations
     {
         /// <inheritdoc />
@@ -29,6 +29,10 @@ namespace Products.Migrations
                         .HasColumnType("TEXT");
 
                     b.Property<string>("Name")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Type")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("UpdatedAt")

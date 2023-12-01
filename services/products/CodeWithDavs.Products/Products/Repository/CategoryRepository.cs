@@ -16,6 +16,7 @@ namespace Products.Repository
 
         public async Task CreateCategoryAsync(Category entity)
         {
+            entity.Id = Guid.NewGuid().ToString();
             entity.CreatedAt = DateTime.Now;
             await _context.AddAsync(entity);
             await _context.SaveChangesAsync();

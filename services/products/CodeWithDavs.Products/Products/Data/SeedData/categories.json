@@ -1,0 +1,38 @@
+[
+  {
+    "Id": "",
+    "Name": "ASP.NET Core",
+    "Type": "REST API"
+  },
+  {
+    "Id": "",
+    "Name": "Express JS",
+    "Type": "REST API"
+  },
+  {
+    "Id": "",
+    "Name": "React JS",
+    "Type": "UI Desing"
+  },
+  {
+    "Id": "",
+    "Name": "M.E.R.N Stack",
+    "Type": "Full Stack"
+  },
+  {
+    "Id": "",
+    "Name": "P.E.R.N Stack",
+    "Type": "Full Stack"
+  },
+  {
+    "Id": "",
+    "Name": "ASP.NET Core - React",
+    "Type": "Full Stack"
+  },
+
+  {
+    "Id": "",
+    "Name": "Microservices Stack",
+    "Type": "Full Stack"
+  }
+]

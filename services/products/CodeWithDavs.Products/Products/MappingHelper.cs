@@ -9,6 +9,7 @@ namespace Products
         public MappingHelper()
         {
             CreateMap<Product, ProductDto>().ReverseMap();
+            CreateMap<Product, ProductRequestDto>().ReverseMap();
             CreateMap<Category, CategoryDto>().ReverseMap();
         }
     }

@@ -1,35 +1,33 @@
-using AutoMapper;
-using Microsoft.AspNetCore.Authorization;
+﻿using AutoMapper;
 using Microsoft.AspNetCore.Mvc;
 using Products.Models;
 using Products.Models.Dto;
 using Products.Repository.IRepository;
-using static System.Reflection.Metadata.BlobBuilder;
 
 namespace Products.Controllers
 {
+    [Route("api/products")]
     [ApiController]
-    [Route("api/categories")]
-    public class CategoryController : ControllerBase
+    public class ProductController : ControllerBase
     {
         private ResponseDto _response;
         private readonly IMapper _mapper;
-        private readonly ICategoryRepository _categoryRepos;
+        private readonly IProductRepository _productRepos;
 
-        public CategoryController(ICategoryRepository categoryRepo, IMapper mapper)
+        public ProductController(IProductRepository productRepo, IMapper mapper)
         {
             _mapper = mapper;
             _response = new ResponseDto();
-            _categoryRepos = categoryRepo;
+            _productRepos = productRepo;
         }
 
         [HttpGet]
-        public async Task<ActionResult<ResponseDto>> GetCategories()
+        public async Task<ActionResult<ResponseDto>> GetProducts()
         {
             try
             {
-                var categories = await _categoryRepos.GetAllCategoryAsync();
-                _response.Result =  _mapper.Map<List<CategoryDto>>(categories);
+                var products = await _productRepos.GetAllProductAsync();
+                _response.Result = _mapper.Map<List<ProductDto>>(products);
             }
             catch (Exception ex)
             {
@@ -40,7 +38,7 @@ namespace Products.Controllers
         }
 
         [HttpGet("id:string")]
-        public async Task<ActionResult<ResponseDto>> GetCategory(string id)
+        public async Task<ActionResult<ResponseDto>> GetProduct(string id)
         {
             try
             {
@@ -50,16 +48,16 @@ namespace Products.Controllers
                     return BadRequest(_response);
                 }
 
-                var category = await _categoryRepos.GetCategoryAsync(id);
+                var product = await _productRepos.GetProductAsync(id);
 
-                if (category == null)
+                if (product == null)
                 {
-                    _response.Message = "Category not found.";
+                    _response.Message = "Product not found.";
                     _response.IsSuccess = false;
                     return NotFound(_response);
                 }
 
-                _response.Result = _mapper.Map<CategoryDto>(category);
+                _response.Result = _mapper.Map<ProductDto>(product);
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -71,24 +69,25 @@ namespace Products.Controllers
         }
 
         [HttpPost]
-        public async Task<ActionResult<ResponseDto>> CreateCategory([FromBody] CategoryDto categoryDto)
+        public async Task<ActionResult<ResponseDto>> CreateProduct([FromBody] ProductRequestDto productDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if(categoryDto == null)
+            if (productDto == null)
             {
-                return BadRequest(categoryDto);
+                return BadRequest(productDto);
             }
             try
             {
-                var category = _mapper.Map<Category>(categoryDto);
-                await _categoryRepos.CreateCategoryAsync(category);
+                var product = _mapper.Map<Product>(productDto);
+                await _productRepos.CreateProductAsync(product);
                 _response.IsSuccess = true;
-                _response.Message = "Category successfully created.";
+                _response.Message = "Product successfully created.";
                 return Ok(_response);
-            }catch (Exception ex)
+            }
+            catch (Exception ex)
             {
                 _response.IsSuccess = false;
                 _response.Message = ex.Message;
@@ -97,24 +96,24 @@ namespace Products.Controllers
         }
 
         [HttpPut("id:string")]
-        public async Task<ActionResult<ResponseDto>> UpdateCategory(string id, [FromBody] CategoryDto categoryDto)
+        public async Task<ActionResult<ResponseDto>> UpdateProduct(string id, [FromBody] ProductRequestDto productDto)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            if (categoryDto == null || categoryDto.Id != id)
+            if (productDto == null || productDto.Id != id)
             {
                 _response.Message = "Bad request!";
                 _response.IsSuccess = false;
-                return BadRequest(categoryDto);
+                return BadRequest(productDto);
             }
             try
             {
-                var category = _mapper.Map<Category>(categoryDto);
-                await _categoryRepos.UpdateCategoryAsync(category);
+                var product = _mapper.Map<Product>(productDto);
+                await _productRepos.UpdateProductAsync(product);
                 _response.IsSuccess = true;
-                _response.Message = "Category successfully updated.";
+                _response.Message = "Product successfully updated.";
                 return Ok(_response);
             }
             catch (Exception ex)
@@ -126,7 +125,7 @@ namespace Products.Controllers
         }
 
         [HttpDelete("id:string")]
-        public async Task<ActionResult<ResponseDto>> DeleteCategory(string id)
+        public async Task<ActionResult<ResponseDto>> DeleteProduct(string id)
         {
             if (string.IsNullOrEmpty(id))
             {
@@ -136,11 +135,11 @@ namespace Products.Controllers
             }
             try
             {
-                await _categoryRepos.DeleteCategoryAsync(id);
+                await _productRepos.DeleteProductAsync(id);
                 _response.IsSuccess = true;
-                _response.Message = "Category successfully deleted.";
+                _response.Message = "Product successfully deleted.";
                 return Ok(_response);
-            }    
+            }
             catch (Exception ex)
             {
                 _response.IsSuccess = false;
@@ -148,5 +147,5 @@ namespace Products.Controllers
                 return BadRequest(_response);
             }
         }
-    };
+    }
 }
