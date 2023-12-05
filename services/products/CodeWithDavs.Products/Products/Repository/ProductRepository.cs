@@ -32,7 +32,7 @@ namespace Products.Repository
 
         public async Task DeleteProductAsync(string id)
         {
-            var entity = _context.Categories.Find(id);
+            var entity = _context.Products.Find(id);
             _context.Remove(entity);
             await _context.SaveChangesAsync();
         }
