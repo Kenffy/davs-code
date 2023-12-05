@@ -14,10 +14,18 @@ namespace Products.Repository
             _context = context;
         }
 
+        public async Task<IReadOnlyList<Category>> GetAllCategoryAsync()
+        {
+            return await _context.Categories.ToListAsync();
+        }
+
+        public async Task<Category> GetCategoryAsync(string id)
+        {
+            return await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
+        }
+
         public async Task CreateCategoryAsync(Category entity)
         {
-            entity.Id = Guid.NewGuid().ToString();
-            entity.CreatedAt = DateTime.Now;
             await _context.AddAsync(entity);
             await _context.SaveChangesAsync();
         }
@@ -29,19 +37,8 @@ namespace Products.Repository
             await _context.SaveChangesAsync();
         }
 
-        public async Task<IReadOnlyList<Category>> GetAllCategoryAsync()
-        {
-            return await _context.Categories.ToListAsync();
-        }
-
-        public async Task<Category> GetCategoryAsync(string id)
-        {
-            return await _context.Categories.FirstOrDefaultAsync(c => c.Id == id);
-        }
-
         public async Task UpdateCategoryAsync(Category entity)
         {
-            entity.UpdatedAt = DateTime.Now;
             _context.Update(entity);
             await _context.SaveChangesAsync();
         }

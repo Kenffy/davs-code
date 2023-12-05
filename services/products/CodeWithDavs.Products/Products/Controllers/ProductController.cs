@@ -3,6 +3,7 @@ using Microsoft.AspNetCore.Mvc;
 using Products.Models;
 using Products.Models.Dto;
 using Products.Repository.IRepository;
+using Slugify;
 
 namespace Products.Controllers
 {
@@ -12,11 +13,13 @@ namespace Products.Controllers
     {
         private ResponseDto _response;
         private readonly IMapper _mapper;
+        private readonly SlugHelper _slugify;
         private readonly IProductRepository _productRepos;
 
         public ProductController(IProductRepository productRepo, IMapper mapper)
         {
             _mapper = mapper;
+            _slugify = new SlugHelper();
             _response = new ResponseDto();
             _productRepos = productRepo;
         }
@@ -82,6 +85,10 @@ namespace Products.Controllers
             try
             {
                 var product = _mapper.Map<Product>(productDto);
+                product.Id = Guid.NewGuid().ToString();
+                product.Slug = _slugify.GenerateSlug(product.Name);
+                product.CreatedAt = DateTime.Now;
+
                 await _productRepos.CreateProductAsync(product);
                 _response.IsSuccess = true;
                 _response.Message = "Product successfully created.";
@@ -111,6 +118,9 @@ namespace Products.Controllers
             try
             {
                 var product = _mapper.Map<Product>(productDto);
+                product.Slug = _slugify.GenerateSlug(product.Name);
+                product.UpdatedAt = DateTime.Now;
+
                 await _productRepos.UpdateProductAsync(product);
                 _response.IsSuccess = true;
                 _response.Message = "Product successfully updated.";

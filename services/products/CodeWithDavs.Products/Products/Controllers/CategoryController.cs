@@ -84,6 +84,9 @@ namespace Products.Controllers
             try
             {
                 var category = _mapper.Map<Category>(categoryDto);
+                category.Id = Guid.NewGuid().ToString();
+                category.CreatedAt = DateTime.Now;
+
                 await _categoryRepos.CreateCategoryAsync(category);
                 _response.IsSuccess = true;
                 _response.Message = "Category successfully created.";
@@ -112,6 +115,8 @@ namespace Products.Controllers
             try
             {
                 var category = _mapper.Map<Category>(categoryDto);
+                category.UpdatedAt = DateTime.Now;
+
                 await _categoryRepos.UpdateCategoryAsync(category);
                 _response.IsSuccess = true;
                 _response.Message = "Category successfully updated.";
