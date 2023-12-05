@@ -1,9 +1,11 @@
 ﻿using AutoMapper;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Products.Models;
 using Products.Models.Dto;
 using Products.Repository.IRepository;
 using Slugify;
+using System.Data;
 
 namespace Products.Controllers
 {
@@ -72,6 +74,7 @@ namespace Products.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseDto>> CreateProduct([FromBody] ProductRequestDto productDto)
         {
             if (!ModelState.IsValid)
@@ -103,6 +106,7 @@ namespace Products.Controllers
         }
 
         [HttpPut("id:string")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseDto>> UpdateProduct(string id, [FromBody] ProductRequestDto productDto)
         {
             if (!ModelState.IsValid)
@@ -135,6 +139,7 @@ namespace Products.Controllers
         }
 
         [HttpDelete("id:string")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseDto>> DeleteProduct(string id)
         {
             if (string.IsNullOrEmpty(id))

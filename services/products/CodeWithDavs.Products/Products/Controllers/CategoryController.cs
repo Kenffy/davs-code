@@ -71,6 +71,7 @@ namespace Products.Controllers
         }
 
         [HttpPost]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseDto>> CreateCategory([FromBody] CategoryDto categoryDto)
         {
             if (!ModelState.IsValid)
@@ -100,6 +101,7 @@ namespace Products.Controllers
         }
 
         [HttpPut("id:string")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseDto>> UpdateCategory(string id, [FromBody] CategoryDto categoryDto)
         {
             if (!ModelState.IsValid)
@@ -131,6 +133,7 @@ namespace Products.Controllers
         }
 
         [HttpDelete("id:string")]
+        [Authorize(Roles = "Admin")]
         public async Task<ActionResult<ResponseDto>> DeleteCategory(string id)
         {
             if (string.IsNullOrEmpty(id))

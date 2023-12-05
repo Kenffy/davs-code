@@ -23,21 +23,29 @@ builder.Services.AddScoped<IProductRepository, ProductRepository>();
 builder.Services.AddScoped<ICategoryRepository, CategoryRepository>();
 builder.Services.AddAutoMapper(typeof(MappingHelper));
 
-var secretKey = builder.Configuration.GetValue<string>("ApiConfigurations:Secret");
+var SecretKey = builder.Configuration.GetValue<string>("ApiConfigurations:SecretKey");
+var Issuer = builder.Configuration.GetValue<string>("ApiConfigurations:Issuer");
+var Audience = builder.Configuration.GetValue<string>("ApiConfigurations:Audience");
 
-//builder.Services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
-//    .AddJwtBearer(options =>
-//    {
-//        options.TokenValidationParameters = new TokenValidationParameters
-//        {
-//            ValidateIssuerSigningKey = true,
-//            IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(secretKey)),
-//            ValidateIssuer = false,
-//            ValidateAudience = false
-//        };
-//    });
-
+builder.Services.AddAuthentication(x =>
+{
+    x.DefaultAuthenticateScheme = JwtBearerDefaults.AuthenticationScheme;
+    x.DefaultChallengeScheme = JwtBearerDefaults.AuthenticationScheme;
+})
+.AddJwtBearer(options =>
+{
+    options.TokenValidationParameters = new TokenValidationParameters
+    {
+        ValidateIssuerSigningKey = true,
+        IssuerSigningKey = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(SecretKey)),
+        ValidateIssuer = true,
+        ValidIssuer = Issuer,
+        ValidAudience = Audience,
+        ValidateAudience = true
+    };
+});
 builder.Services.AddAuthorization();
+
 
 builder.Services.AddControllers();
 
@@ -54,11 +62,24 @@ builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen(options => {
     options.AddSecurityDefinition(name: JwtBearerDefaults.AuthenticationScheme, securityScheme: new OpenApiSecurityScheme
     {
-        Description = "Enter the Bearer Authorization string as following: `Bearer Generated-JWT-Token`",
+        Description = "Enter the Bearer Authorization string as following: `Bearer {Token}`",
         Name = "Authorization",
         In = ParameterLocation.Header,
         Type = SecuritySchemeType.ApiKey,
         Scheme = "Bearer"
+    });
+    options.AddSecurityRequirement(new OpenApiSecurityRequirement
+    {
+        {
+            new OpenApiSecurityScheme
+            {
+                Reference= new OpenApiReference
+                {
+                    Type=ReferenceType.SecurityScheme,
+                    Id=JwtBearerDefaults.AuthenticationScheme
+                }
+            }, new string[]{}
+        }
     });
     options.SwaggerDoc("v1", new OpenApiInfo { Title = "CodeWithDavs Product API", Version = "v1" });
 });
