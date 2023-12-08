@@ -4,30 +4,30 @@ import axios from "axios";
 const BaseUrl = "https://localhost:5004/api/products";
 
 export default function Home() {
-  const [courses, setCoures] = useState([]);
-  useEffect(() => {
-    const loadCoursesAsync = async () => {
-      try {
-        const res = await axios.get(BaseUrl);
-        if (res) {
-          setCoures(res.data.result);
-        }
-      } catch (error) {
-        console.log(error);
-      }
-    };
-    loadCoursesAsync();
-  }, []);
+  // const [courses, setCoures] = useState([]);
+  // useEffect(() => {
+  //   const loadCoursesAsync = async () => {
+  //     try {
+  //       const res = await axios.get(BaseUrl);
+  //       if (res) {
+  //         setCoures(res.data.result);
+  //       }
+  //     } catch (error) {
+  //       console.log(error);
+  //     }
+  //   };
+  //   loadCoursesAsync();
+  // }, []);
 
-  console.log(courses);
+  // console.log(courses);
   return (
     <div className="home">
       <section id="header">
-        <div className="s-header">Header</div>
+        <div className="s-header container">Header</div>
       </section>
 
       <section id="greeting">
-        <div className="s-greeting">
+        <div className="container s-greeting">
           <h2>Hello Welcome! I am Davy</h2>
           <p>
             Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
@@ -39,7 +39,7 @@ export default function Home() {
       </section>
 
       <section id="topics">
-        <div className="s-topics">
+        <div className="container s-topics">
           <h4>Topics</h4>
           <ul>
             <li>Basics</li>
@@ -51,15 +51,15 @@ export default function Home() {
       </section>
 
       <section id="coures">
-        <div className="top-courses">Coures</div>
+        <div className="container top-courses">Coures</div>
       </section>
 
       <section id="testimonials">
-        <div className="s-feedbacks">Feedbacks</div>
+        <div className="container s-feedbacks">Feedbacks</div>
       </section>
 
       <section id="Contact">
-        <div className="s-contact">Contact</div>
+        <div className="container s-contact">Contact</div>
       </section>
     </div>
   );

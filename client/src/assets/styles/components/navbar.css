@@ -1,8 +1,9 @@
 .navbar {
   height: 80px;
   width: 100%;
-  position: sticky;
-  top: 0;
+  position: fixed;
+  background-color: var(--blue);
+  box-shadow: var(--box-shadow);
   z-index: 100;
 }
 
@@ -14,17 +15,119 @@
   justify-content: space-between;
 }
 
-.nav-wrapper .logo {
-  font-size: 1.4rem;
+.nav-wrapper .logo img {
+  height: 100%;
+  width: 110px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  object-fit: contain;
 }
 
 .nav-links {
+  height: 100%;
   display: flex;
   align-items: center;
   justify-content: flex-end;
 }
 
 .nav-links a {
-  margin-left: 1rem;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  text-transform: uppercase;
   font-size: 1.2rem;
+  transition: all 0.1s;
+}
+
+.nav-links a span {
+  padding: 0.5rem 1rem;
+  text-align: center;
+  border-radius: var(--radius);
+}
+
+.nav-links a:hover span {
+  background-color: rgba(0, 0, 0, 0.5);
+}
+
+.login-btn {
+  background-color: var(--white);
+  color: var(--blue);
+  font-weight: 500;
+  margin-left: 1rem;
+}
+
+.nav-links a:hover span,
+.login-btn:hover {
+  color: var(--white);
+}
+
+.menu-icon {
+  font-size: 2rem;
+  cursor: pointer;
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .nav-wrapper .logo img {
+    width: 90px;
+  }
+  .menu-icon {
+    display: block;
+  }
+
+  .nav-links {
+    position: absolute;
+    top: 80px;
+    left: 0;
+    width: 100%;
+    padding: 1rem 0rem;
+    min-height: 100vh;
+    transform: translateX(-100%);
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    background-color: var(--darkblue);
+    transition: all 0.3s;
+  }
+
+  .nav-links.active {
+    transform: translateX(0);
+  }
+
+  .nav-links a {
+    width: 100%;
+    height: auto;
+    margin-bottom: 0rem;
+  }
+
+  .nav-links a span {
+    padding: 1rem 1rem;
+    text-align: initial;
+    border-radius: initial;
+    width: 100%;
+  }
+
+  .nav-links a:hover span {
+    background-color: rgba(0, 0, 0, 0.5);
+  }
+
+  .login-btn {
+    width: 100px !important;
+    border-radius: var(--radius) !important;
+    padding: 0.5rem 1rem !important;
+    margin-left: 1rem;
+    margin-top: 2rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .nav-wrapper .logo img {
+    width: 70px;
+  }
+
+  .menu-icon {
+    font-size: 1.7rem;
+  }
 }
