@@ -9,6 +9,7 @@
   --radius: 0.5rem;
   --radius-sm: 0.3rem;
   --box-shadow: 0 0.5rem 1.5rem rgba(0, 0, 0, 0.5);
+  --box-shadow2: 0 1rem 1.5rem rgba(0, 0, 0, 0.5);
 }
 
 * {
@@ -38,7 +39,7 @@ a {
 }
 
 section {
-  min-height: 700px;
+  min-height: 50px;
   height: 100%;
   width: 100%;
   margin-top: 4rem;

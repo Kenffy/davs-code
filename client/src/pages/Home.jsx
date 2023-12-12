@@ -4,6 +4,8 @@ import HeaderBg from "../assets/images/background.png";
 import NoProfile from "../assets/images/default-profile.jpg";
 import "../assets/styles/pages/home.css";
 import { Link } from "react-router-dom";
+import { Services } from "../data/data";
+import ServiceItem from "../components/ServiceItem";
 
 const BaseUrl = "https://localhost:5004/api/products";
 
@@ -59,12 +61,10 @@ export default function Home() {
               consectetur recusandae suscipit voluptatibus.
             </p>
             <p>
-              Lorem ipsum dolor sit amet consectetur adipisicing elit. Totam
-              temporibus vel perferendis et voluptate quidem nihil eveniet, odit
-              atque porro labore modi. Debitis tenetur ratione accusamus
-              consectetur recusandae suscipit voluptatibus. amet consectetur
-              adipisicing elit. Totam temporibus vel perferendis et voluptate
-              quidem nihil eveniet, odit atque porro labore modi.
+              Debitis tenetur ratione accusamus consectetur recusandae suscipit
+              voluptatibus. amet consectetur adipisicing elit. Totam temporibus
+              vel perferendis et voluptate quidem nihil eveniet, odit atque
+              porro labore modi.
             </p>
           </div>
         </div>
@@ -74,42 +74,9 @@ export default function Home() {
         <div className="container s-topics">
           <h2>Our Topics</h2>
           <ul className="topics-grid">
-            <li className="topic-item">
-              <h3>REST APIs</h3>
-              <ul>
-                <li>ASP.NET Core</li>
-                <li>Express JS</li>
-                <li>Python Flask</li>
-                <li>Spring Boot</li>
-              </ul>
-            </li>
-            <li className="topic-item">
-              <h3>UI Design</h3>
-              <ul>
-                <li>HTML, CSS, JS</li>
-                <li>React JS</li>
-                <li>Angular</li>
-                <li>Blazor</li>
-              </ul>
-            </li>
-            <li className="topic-item">
-              <h3>Databases</h3>
-              <ul>
-                <li>MySQL</li>
-                <li>Postgresql</li>
-                <li>MongoDB</li>
-                <li>Firebase</li>
-                <li>MS SQL Server</li>
-              </ul>
-            </li>
-            <li className="topic-item">
-              <h3>Mobile</h3>
-              <ul>
-                <li>React Native</li>
-                <li>.NET MAUI</li>
-                <li>Xamarin</li>
-              </ul>
-            </li>
+            {Services.map((service) => (
+              <ServiceItem key={service?.id} service={service} />
+            ))}
           </ul>
         </div>
       </section>
