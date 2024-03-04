@@ -4,3 +4,6 @@
 #*.db
 *.rdb
 *.vs
+CodeWithDavs.Orders/.vs
+CodeWithDavs.Products/.vs
+CodeWithDavs.Authenticate/.vs
