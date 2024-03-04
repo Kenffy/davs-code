@@ -1,0 +1,11 @@
+pipeline:
+  stages:
+    - stage: "Build Auth Service"
+      executionOrder: 0
+      steps:
+        - echo "Start build"
+        - cmd: authenticate.bat --build-sln
+          fromPath: scripts\
+        - cmd: authenticate.bat --execute
+          fromPath: scripts\
+      timeLimitInMinutes: 5
