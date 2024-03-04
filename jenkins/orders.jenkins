@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage ('Build Orders Service Solution') {
             steps {
-                echo "build solution..."
+                echo "build orders service"
                 echo "build param: ${params.build_config}"
                 bat "scripts/orders.bat ${params.build_config}"
             }
@@ -23,7 +23,7 @@ pipeline {
         }
         stage ('Terminate Orders Service') {
             steps {
-                echo "terminate all dotnet servers..."
+                echo "terminate all orders dotnet servers..."
                 bat "scripts/orders.bat --shutdown"
             }
         }

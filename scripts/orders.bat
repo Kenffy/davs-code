@@ -32,7 +32,7 @@ if "!PARAMETERS!"=="--help" (
     REM execute programm
     echo CURRENT_FOLDER: %PROJECT_DIR%
     cd %PROJECT_DIR%
-    echo start execute
+    echo run orders service
     dotnet run
 
     goto success
@@ -40,42 +40,42 @@ if "!PARAMETERS!"=="--help" (
     REM shutdown programm
     echo CURRENT_FOLDER: %PROJECT_DIR%
     cd %PROJECT_DIR%
-    echo terminate all dotnet servers...
+    echo terminate all orders service dotnet servers...
     dotnet build-server shutdown
 
     goto success
 ) else if "!PARAMETERS!"=="--build-execute"  (
-    echo Build solution start
+    echo Build orders service solution...
     dotnet build
     REM execute programm
     echo CURRENT_FOLDER: %PROJECT_DIR%
     cd %PROJECT_DIR%
-    echo start execute
+    echo run orders service
     dotnet run
 
     goto success
 ) else if "!PARAMETERS!"=="--clean-build-execute"  (
-    echo Clean solution...
+    echo Clean orders service solution...
     dotnet clean
-    echo Build solution...
+    echo Build orders service solution...
     dotnet build
     REM execute programm
     echo CURRENT_FOLDER: %PROJECT_DIR%
     cd %PROJECT_DIR%
-    echo start execute
+    echo run orders service
     dotnet run
 
     goto success
 ) else if "!PARAMETERS!"=="--build-sln" (
-    echo Build solution start
+    echo Build orders service solution...
     dotnet build
     if !ERRORLEVEL! neq 0 goto error
 
     goto success
 ) else if "!PARAMETERS!"=="--clean-build-sln" (
-    echo Clean solution start
+    echo Clean orders service solution...
     dotnet clean
-    echo Build solution start
+    echo Build orders service solution...
     dotnet build
     if !ERRORLEVEL! neq 0 goto error
 

@@ -23,6 +23,8 @@ set PROJECT_DIR=%SLN_DIR%\Authenticate
 
 cd %SLN_DIR%
 
+echo PARAMETERS: %PARAMETERS%
+
 if "!PARAMETERS!"=="--help" (
     REM Help for this batch file
     echo Available command line parameters: --execute, --shutdown, --build-sln, --clean-build-sln, --build-execute, --clean-build-execute
@@ -32,7 +34,7 @@ if "!PARAMETERS!"=="--help" (
     REM execute programm
     echo CURRENT_FOLDER: %PROJECT_DIR%
     cd %PROJECT_DIR%
-    echo start execute
+    echo run auth service
     dotnet run
 
     goto success
@@ -45,37 +47,37 @@ if "!PARAMETERS!"=="--help" (
 
     goto success
 ) else if "!PARAMETERS!"=="--build-execute"  (
-    echo Build solution start
+    echo Build auth service solution...
     dotnet build
     REM execute programm
     echo CURRENT_FOLDER: %PROJECT_DIR%
     cd %PROJECT_DIR%
-    echo start execute
+    echo run auth service
     dotnet run
 
     goto success
 ) else if "!PARAMETERS!"=="--clean-build-execute"  (
-    echo Clean solution...
+    echo Clean auth service solution...
     dotnet clean
-    echo Build solution...
+    echo Build auth service solution...
     dotnet build
     REM execute programm
     echo CURRENT_FOLDER: %PROJECT_DIR%
     cd %PROJECT_DIR%
-    echo start execute
+    echo run auth service
     dotnet run
 
     goto success
 ) else if "!PARAMETERS!"=="--build-sln" (
-    echo Build solution start
+    echo Build auth service solution...
     dotnet build
     if !ERRORLEVEL! neq 0 goto error
 
     goto success
 ) else if "!PARAMETERS!"=="--clean-build-sln" (
-    echo Clean solution start
+    echo Clean auth service solution...
     dotnet clean
-    echo Build solution start
+    echo Build auth service solution...
     dotnet build
     if !ERRORLEVEL! neq 0 goto error
 

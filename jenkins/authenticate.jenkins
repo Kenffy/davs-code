@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage ('Build Auth Service Solution') {
             steps {
-                echo "build solution..."
+                echo "build auth service"
                 echo "build param: ${params.build_config}"
                 bat "scripts/authenticate.bat ${params.build_config}"
             }
@@ -23,7 +23,7 @@ pipeline {
         }
         stage ('Terminate Auth Service') {
             steps {
-                echo "terminate all dotnet servers..."
+                echo "terminate all auth dotnet servers..."
                 bat "scripts/authenticate.bat --shutdown"
             }
         }

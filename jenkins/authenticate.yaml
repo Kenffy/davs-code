@@ -3,9 +3,23 @@ pipeline:
     - stage: "Build Auth Service"
       executionOrder: 0
       steps:
-        - echo "Start build"
+        - echo "build auth Service"
         - cmd: authenticate.bat --build-sln
           fromPath: scripts\
+      timeLimitInMinutes: 5
+
+    - stage: "Test Auth Service"
+      executionOrder: 1
+      steps:
+        - echo "test auth service"
         - cmd: authenticate.bat --execute
+          fromPath: scripts\
+      timeLimitInMinutes: 10
+
+    - stage: "Terminate"
+      executionOrder: 2
+      steps:
+        - echo "terminate all auth dotnet servers"
+        - cmd: authenticate.bat --shutdown
           fromPath: scripts\
       timeLimitInMinutes: 5

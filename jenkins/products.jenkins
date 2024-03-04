@@ -11,7 +11,7 @@ pipeline {
     stages {
         stage ('Build Products Service Solution') {
             steps {
-                echo "build solution..."
+                echo "build products service"
                 echo "build param: ${params.build_config}"
                 bat "scripts/products.bat ${params.build_config}"
             }
@@ -23,7 +23,7 @@ pipeline {
         }
         stage ('Terminate Products Service') {
             steps {
-                echo "terminate all dotnet servers..."
+                echo "terminate all products dotnet servers..."
                 bat "scripts/products.bat --shutdown"
             }
         }

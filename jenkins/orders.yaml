@@ -3,9 +3,23 @@ pipeline:
     - stage: "Build Orders Service"
       executionOrder: 0
       steps:
-        - echo "Start build"
+        - echo "build order service"
         - cmd: orders.bat --build-sln
           fromPath: scripts\
+      timeLimitInMinutes: 5
+
+    - stage: "Test Order Service"
+      executionOrder: 1
+      steps:
+        - echo "test order service"
         - cmd: orders.bat --execute
+          fromPath: scripts\
+      timeLimitInMinutes: 10
+
+    - stage: "Terminate"
+      executionOrder: 2
+      steps:
+        - echo "terminate all order dotnet servers"
+        - cmd: orders.bat --shutdown
           fromPath: scripts\
       timeLimitInMinutes: 5

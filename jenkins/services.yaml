@@ -1,0 +1,33 @@
+pipeline:
+  stages:
+    - stage: "Build Auth Service"
+      executionOrder: 0
+      steps:
+        - echo "Build auth Service"
+        - cmd: authenticate.bat --build-sln
+          fromPath: scripts\
+      timeLimitInMinutes: 5
+
+    - stage: "Build Product Service"
+      executionOrder: 1
+      steps:
+        - echo "Build products Service"
+        - cmd: products.bat --build-sln
+          fromPath: scripts\
+      timeLimitInMinutes: 5
+
+    - stage: "Build Order Service"
+      executionOrder: 2
+      steps:
+        - echo "Build order Service"
+        - cmd: orders.bat --build-sln
+          fromPath: scripts\
+      timeLimitInMinutes: 5
+
+    - stage: "Test All Services"
+      executionOrder: 3
+      steps:
+        - echo "test all services"
+        - cmd: products.bat --execute
+          fromPath: scripts\
+      timeLimitInMinutes: 5

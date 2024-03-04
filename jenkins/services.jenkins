@@ -1,0 +1,47 @@
+import java.net.URLEncoder
+
+// preparing all parameters
+
+if(params.build_config != "undefined"){
+    println("Build config: ${params.build_config}")
+}
+
+pipeline {
+    agent any
+    stages {
+        stage ('Build Auth Service Solution') {
+            steps {
+                echo "build solution..."
+                echo "build param: ${params.build_config}"
+                bat "scripts/authenticate.bat ${params.build_config}"
+            }
+        }
+        stage ('Build Products Service Solution') {
+            steps {
+                echo "build solution..."
+                echo "build param: ${params.build_config}"
+                bat "scripts/products.bat ${params.build_config}"
+            }
+        }
+        stage ('Build Orders Service Solution') {
+            steps {
+                echo "build solution..."
+                echo "build param: ${params.build_config}"
+                bat "scripts/orders.bat ${params.build_config}"
+            }
+        }
+        stage ('Test Services') {
+            steps {
+                echo "run all tests..."
+            }
+        }
+        stage ('Terminate Services') {
+            steps {
+                echo "terminate all dotnet servers..."
+                bat "scripts/authenticate.bat --shutdown"
+                bat "scripts/orders.bat --shutdown"
+                bat "scripts/products.bat --shutdown"
+            }
+        }
+    }
+}
